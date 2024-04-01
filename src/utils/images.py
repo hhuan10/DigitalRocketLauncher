@@ -3,7 +3,7 @@ from typing import List, Tuple
 
 import pygame
 
-from .constants import BACKGROUNDS, NOTIFY_MESSAGE
+from .constants import BACKGROUNDS, NOTIFY_MESSAGE, ROCKET_IMAGES
 
 class Images:
     background: pygame.Surface
@@ -22,3 +22,6 @@ class Images:
         self.wrong_img.set_colorkey((255, 255, 255))
         self.wrong_img.set_alpha(128)
         self.wrong_img = pygame.transform.scale(self.wrong_img, (150, 150))
+        self.rocket_img  = pygame.image.load(ROCKET_IMAGES[0]).convert()
+        self.rocket_img.set_colorkey((255, 255, 255))
+        self.rocket_img.set_alpha(128)

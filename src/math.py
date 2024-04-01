@@ -17,7 +17,9 @@ class MathGame:
         self.background = Images().background
         self.correct    = Images().correct_img
         self.wrong      = Images().wrong_img
-    
+        self.rocket     = Images().rocket_img
+        self.score      = 300
+
     async def start(self):
         while True:
             await self.play()
@@ -48,7 +50,9 @@ class MathGame:
             
             self.background             = pygame.transform.scale(self.background, (screen_width, screen_height))
             self.screen.blit(self.background, (0, 0))
-
+            self.rocket                = pygame.transform.scale(self.rocket, (300, 300))
+            self.screen.blit(self.rocket, ((-50, self.score)))
+            
             self.screen.blit(text, position)
             pygame.display.flip()
 
@@ -78,10 +82,12 @@ class MathGame:
                     print('Correct!')
                     self.sounds.correct.play()
                     self.screen.blit(self.correct,((800-150)/2, (600-150)*3/4))
+                    self.score -= 30
                 else:
                     print('Incorrect!')
                     self.sounds.incorrect.play()
                     self.screen.blit(self.wrong, ((800-150)/2, (600-150)*3/4))
+                    self.score += 30
                 pygame.display.flip()
                 time.sleep(3)
                 self.user_input = ''
