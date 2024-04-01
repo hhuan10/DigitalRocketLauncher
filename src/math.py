@@ -4,6 +4,7 @@ import random
 import pygame
 import time
 from pygame.locals import K_ESCAPE, KEYDOWN, K_RETURN, K_BACKSPACE, QUIT
+from .utils import Sounds
 
 class MathGame:
     def __init__(self):
@@ -12,6 +13,7 @@ class MathGame:
         self.screen     = pygame.display.set_mode((800, 600))
         self.font       = pygame.font.Font(None, 120)
         self.user_input = ''
+        self.sounds     = Sounds()
     
     async def start(self):
         while True:
@@ -25,13 +27,15 @@ class MathGame:
     async def play(self):
         running = True
         while running:
-            num1     = random.randint(1, 10)
-            num2     = random.randint(1, 10)
-            operator = random.choice(['+', '-'])
-            if operator == '+':
-                answer = num1 + num2
-            else:
-                answer = num1 - num2
+            num1 = num2 = 0
+            while num2 >= num1:
+                num1     = random.randint(1, 10)
+                num2     = random.randint(1, 10)
+                operator = random.choice(['+', '-'])
+                if operator == '+':
+                    answer = num1 + num2
+                else:
+                    answer = num1 - num2
 
             question                    = f'{num1} {operator} {num2} = ?'
             text                        = self.font.render(question, True, (255, 255, 255))
@@ -65,9 +69,11 @@ class MathGame:
             if self.user_input != '':
                 if int(self.user_input) == answer:
                     print('Correct!')
+                    self.sounds.correct.play()
                     self.display_message('Correct!', (0, 255, 0), (position[0], position[1] + 150))
                 else:
                     print('Incorrect!')
+                    self.sounds.incorrect.play()
                     self.display_message('Incorrect!', (255, 0, 0), (position[0], position[1] + 150))
                 time.sleep(3)
                 self.user_input = ''
