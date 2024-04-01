@@ -4,7 +4,7 @@ import random
 import pygame
 import time
 from pygame.locals import K_ESCAPE, KEYDOWN, K_RETURN, K_BACKSPACE, QUIT
-from .utils import Sounds
+from .utils import Sounds, Images
 
 class MathGame:
     def __init__(self):
@@ -14,6 +14,9 @@ class MathGame:
         self.font       = pygame.font.Font(None, 120)
         self.user_input = ''
         self.sounds     = Sounds()
+        self.background = Images().background
+        self.correct    = Images().correct_img
+        self.wrong      = Images().wrong_img
     
     async def start(self):
         while True:
@@ -42,6 +45,10 @@ class MathGame:
             screen_width, screen_height = self.screen.get_size()
             text_width, text_height     = text.get_size()
             position                    = ((screen_width - text_width) // 2, (screen_height - text_height) // 2)
+            
+            self.background             = pygame.transform.scale(self.background, (screen_width, screen_height))
+            self.screen.blit(self.background, (0, 0))
+
             self.screen.blit(text, position)
             pygame.display.flip()
 
@@ -70,13 +77,14 @@ class MathGame:
                 if int(self.user_input) == answer:
                     print('Correct!')
                     self.sounds.correct.play()
-                    self.display_message('Correct!', (0, 255, 0), (position[0], position[1] + 150))
+                    self.screen.blit(self.correct,((800-150)/2, (600-150)*3/4))
                 else:
                     print('Incorrect!')
                     self.sounds.incorrect.play()
-                    self.display_message('Incorrect!', (255, 0, 0), (position[0], position[1] + 150))
+                    self.screen.blit(self.wrong, ((800-150)/2, (600-150)*3/4))
+                pygame.display.flip()
                 time.sleep(3)
                 self.user_input = ''
-                
+            
             self.screen.fill((0, 0, 0))
             pygame.display.flip()
