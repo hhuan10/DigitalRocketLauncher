@@ -1,5 +1,5 @@
 BACKGROUNDS = (
-    "assets/images/background.jpeg",
+    "assets/images/background.png",
 )
 
 NOTIFY_MESSAGE = (
@@ -9,4 +9,8 @@ NOTIFY_MESSAGE = (
 
 ROCKET_IMAGES = (
     "assets/images/rocket.png",
+)
+
+LAUNCH_BACKGROUND = ( 
+    "assets/images/launch_success.png",
 )

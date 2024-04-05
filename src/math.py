@@ -1,3 +1,10 @@
+'''
+   Author:  YiHang Huang
+   Purpose: MathGame class for the MathGame
+   MathGame is a simple math game that generates random math problems for the user to solve.
+   Created: 2024.4.5
+'''
+
 import asyncio
 import sys
 import random
@@ -29,9 +36,30 @@ class MathGame:
         self.screen.blit(text, position)
         pygame.display.flip()
 
+    def handle_input(self):
+        end_input = False
+        while not end_input:
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    end_input = True
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        end_input = True
+                    if event.key == K_RETURN:
+                        end_input = True
+                    elif event.key == K_BACKSPACE:
+                        self.user_input = self.user_input[:-1]
+                    else:
+                        if event.unicode.isdigit() or event.unicode == '-':
+                            self.user_input += event.unicode
+
     async def play(self):
         running = True
-        while running:
+
+        while running and self.score > 0:
+            print('Score:', self.score)
             num1 = num2 = 0
             while num2 >= num1:
                 num1     = random.randint(1, 10)
@@ -50,33 +78,17 @@ class MathGame:
             
             self.background             = pygame.transform.scale(self.background, (screen_width, screen_height))
             self.screen.blit(self.background, (0, 0))
+
+            # render rocket
             self.rocket                = pygame.transform.scale(self.rocket, (300, 300))
             self.screen.blit(self.rocket, ((-50, self.score)))
             
+            # rener question
             self.screen.blit(text, position)
             pygame.display.flip()
 
-            end_input = False
-            while not end_input:
-                for event in pygame.event.get():
-                    if event.type == QUIT:
-                        end_input = True
-                        running = False
-                        pygame.quit()
-                        sys.exit()
-                    elif event.type == KEYDOWN:
-                        if event.key == K_ESCAPE:
-                            running = False
-                            end_input = True
-                        if event.key == K_RETURN:
-                            print('User input:', self.user_input)
-                            end_input = True
-                        elif event.key == K_BACKSPACE:
-                            self.user_input = self.user_input[:-1]
-                        else:
-                            if event.unicode.isdigit() or event.unicode == '-':
-                                self.user_input += event.unicode
-                        
+            self.handle_input()
+
             if self.user_input != '':
                 if int(self.user_input) == answer:
                     print('Correct!')
@@ -94,3 +106,11 @@ class MathGame:
             
             self.screen.fill((0, 0, 0))
             pygame.display.flip()
+
+        self.screen.fill((0, 0, 0))
+        self.background = Images().launch_scucess
+        self.background = pygame.transform.scale(self.background, (800, 600))
+        self.screen.blit(self.background, (0, 0))
+        pygame.display.flip()
+        self.sounds.launch_success.play()
+        self.handle_input()
