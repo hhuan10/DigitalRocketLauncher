@@ -1,7 +1,7 @@
 '''
    Author:  YiHang Huang
-   Purpose: MathGame class for the MathGame
-   MathGame is a simple math game that generates random math problems for the user to solve.
+   Purpose: Main class for the Digital Rocket Launcher
+   Digital Rocket Launcher is a simple math game that generates random math problems for the user to solve.
    Created: 2024.4.5
 '''
 
@@ -13,7 +13,7 @@ import time
 from pygame.locals import K_ESCAPE, KEYDOWN, K_RETURN, K_BACKSPACE, QUIT
 from .utils import Sounds, Images
 
-class MathGame:
+class DigitalRocketLauncher:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption("Math Game")
