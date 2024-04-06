@@ -57,21 +57,24 @@ class MathGame:
 
     async def play(self):
         running = True
-
         while running and self.score > 0:
             print('Score:', self.score)
             num1 = num2 = 0
-            while num2 >= num1:
+            question_gen = True
+            while question_gen:
                 num1     = random.randint(1, 100)
                 num2     = random.randint(1, 100)
                 operator = random.choice(['+', '-'])
+
                 if operator == '+':
                     answer = num1 + num2
+                    if answer < 100:
+                        question_gen = False
                 else:
                     answer = num1 - num2
-                if answer > 100:
-                    continue
-
+                    if answer > 0:
+                        question_gen = False
+                
             question                    = f'{num1} {operator} {num2} = ?'
             text                        = self.font.render(question, True, (255, 255, 255))
             screen_width, screen_height = self.screen.get_size()
