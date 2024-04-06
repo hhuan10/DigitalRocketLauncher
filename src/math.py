@@ -62,13 +62,15 @@ class MathGame:
             print('Score:', self.score)
             num1 = num2 = 0
             while num2 >= num1:
-                num1     = random.randint(1, 10)
-                num2     = random.randint(1, 10)
+                num1     = random.randint(1, 100)
+                num2     = random.randint(1, 100)
                 operator = random.choice(['+', '-'])
                 if operator == '+':
                     answer = num1 + num2
                 else:
                     answer = num1 - num2
+                if answer > 100:
+                    continue
 
             question                    = f'{num1} {operator} {num2} = ?'
             text                        = self.font.render(question, True, (255, 255, 255))
@@ -111,6 +113,9 @@ class MathGame:
         self.background = Images().launch_scucess
         self.background = pygame.transform.scale(self.background, (800, 600))
         self.screen.blit(self.background, (0, 0))
+        self.launch_message = Images().luanch_message
+        self.launch_message = pygame.transform.scale(self.launch_message, (600, 450))
+        self.screen.blit(self.launch_message, ((800-600)/2, (600-450)/2))
         pygame.display.flip()
         self.sounds.launch_success.play()
         self.handle_input()

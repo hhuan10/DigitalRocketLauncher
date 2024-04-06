@@ -9,7 +9,7 @@ from typing import List, Tuple
 
 import pygame
 
-from .constants import BACKGROUNDS, NOTIFY_MESSAGE, ROCKET_IMAGES, LAUNCH_BACKGROUND
+from .constants import BACKGROUNDS, NOTIFY_MESSAGE, ROCKET_IMAGES, LAUNCH_BACKGROUND, LAUCH_MESSAGE
 
 class Images:
     background: pygame.Surface
@@ -26,3 +26,4 @@ class Images:
         self.wrong_img      = pygame.transform.scale(self.wrong_img, (150, 150))
         self.rocket_img     = pygame.image.load(ROCKET_IMAGES[0]).convert_alpha()
         self.launch_scucess = pygame.image.load(LAUNCH_BACKGROUND[0]).convert()
+        self.luanch_message = pygame.image.load(LAUCH_MESSAGE[0]).convert_alpha()

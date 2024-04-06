@@ -14,3 +14,7 @@ ROCKET_IMAGES = (
 LAUNCH_BACKGROUND = ( 
     "assets/images/launch_success.png",
 )
+
+LAUCH_MESSAGE = (
+    "assets/images/success_fonts.png",
+)
